@@ -1,0 +1,127 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 800px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"borderWidth": 2, "color": {"background": "lightblue", "border": "blue"}, "font": {"color": "black", "face": "arial", "size": 18, "strokeColor": "#ffffff", "strokeWidth": 2}, "id": "Main Integration Function", "label": "Main Integration Function", "shape": "dot", "size": 20}, {"borderWidth": 2, "color": {"background": "lightblue", "border": "blue"}, "font": {"color": "black", "face": "arial", "size": 18, "strokeColor": "#ffffff", "strokeWidth": 2}, "id": "Initialise Network Application", "label": "Initialise Network Application", "shape": "dot", "size": 20}, {"borderWidth": 2, "color": {"background": "lightblue", "border": "blue"}, "font": {"color": "black", "face": "arial", "size": 18, "strokeColor": "#ffffff", "strokeWidth": 2}, "id": "Setup Main Screen", "label": "Setup Main Screen", "shape": "dot", "size": 20}, {"borderWidth": 2, "color": {"background": "lightblue", "border": "blue"}, "font": {"color": "black", "face": "arial", "size": 18, "strokeColor": "#ffffff", "strokeWidth": 2}, "id": "Configure MDI", "label": "Configure MDI", "shape": "dot", "size": 20}, {"borderWidth": 2, "color": {"background": "lightblue", "border": "blue"}, "font": {"color": "black", "face": "arial", "size": 18, "strokeColor": "#ffffff", "strokeWidth": 2}, "id": "Setup Network Infrastructure", "label": "Setup Network Infrastructure", "shape": "dot", "size": 20}, {"borderWidth": 2, "color": {"background": "lightblue", "border": "blue"}, "font": {"color": "black", "face": "arial", "size": 18, "strokeColor": "#ffffff", "strokeWidth": 2}, "id": "Visualize Blockchain TPS", "label": "Visualize Blockchain TPS", "shape": "dot", "size": 20}, {"borderWidth": 2, "color": {"background": "lightblue", "border": "blue"}, "font": {"color": "black", "face": "arial", "size": 18, "strokeColor": "#ffffff", "strokeWidth": 2}, "id": "Initialise SARBP", "label": "Initialise SARBP", "shape": "dot", "size": 20}, {"borderWidth": 2, "color": {"background": "lightblue", "border": "blue"}, "font": {"color": "black", "face": "arial", "size": 18, "strokeColor": "#ffffff", "strokeWidth": 2}, "id": "Setup Network Manager", "label": "Setup Network Manager", "shape": "dot", "size": 20}, {"borderWidth": 2, "color": {"background": "lightblue", "border": "blue"}, "font": {"color": "black", "face": "arial", "size": 18, "strokeColor": "#ffffff", "strokeWidth": 2}, "id": "Finalise Integration and Validate", "label": "Finalise Integration and Validate", "shape": "dot", "size": 20}, {"borderWidth": 2, "color": {"background": "lightblue", "border": "blue"}, "font": {"color": "black", "face": "arial", "size": 18, "strokeColor": "#ffffff", "strokeWidth": 2}, "id": "Initialise Socket", "label": "Initialise Socket", "shape": "dot", "size": 20}, {"borderWidth": 2, "color": {"background": "lightblue", "border": "blue"}, "font": {"color": "black", "face": "arial", "size": 18, "strokeColor": "#ffffff", "strokeWidth": 2}, "id": "Configure Socket Parameters", "label": "Configure Socket Parameters", "shape": "dot", "size": 20}, {"borderWidth": 2, "color": {"background": "lightblue", "border": "blue"}, "font": {"color": "black", "face": "arial", "size": 18, "strokeColor": "#ffffff", "strokeWidth": 2}, "id": "Setup Socket Connections", "label": "Setup Socket Connections", "shape": "dot", "size": 20}, {"borderWidth": 2, "color": {"background": "lightblue", "border": "blue"}, "font": {"color": "black", "face": "arial", "size": 18, "strokeColor": "#ffffff", "strokeWidth": 2}, "id": "Configure Panels", "label": "Configure Panels", "shape": "dot", "size": 20}, {"borderWidth": 2, "color": {"background": "lightblue", "border": "blue"}, "font": {"color": "black", "face": "arial", "size": 18, "strokeColor": "#ffffff", "strokeWidth": 2}, "id": "Add CRUD Buttons", "label": "Add CRUD Buttons", "shape": "dot", "size": 20}, {"borderWidth": 2, "color": {"background": "lightblue", "border": "blue"}, "font": {"color": "black", "face": "arial", "size": 18, "strokeColor": "#ffffff", "strokeWidth": 2}, "id": "Set Entry Point", "label": "Set Entry Point", "shape": "dot", "size": 20}, {"borderWidth": 2, "color": {"background": "lightblue", "border": "blue"}, "font": {"color": "black", "face": "arial", "size": 18, "strokeColor": "#ffffff", "strokeWidth": 2}, "id": "Initialise MDI Form", "label": "Initialise MDI Form", "shape": "dot", "size": 20}, {"borderWidth": 2, "color": {"background": "lightblue", "border": "blue"}, "font": {"color": "black", "face": "arial", "size": 18, "strokeColor": "#ffffff", "strokeWidth": 2}, "id": "Configure Menu Strip", "label": "Configure Menu Strip", "shape": "dot", "size": 20}, {"borderWidth": 2, "color": {"background": "lightblue", "border": "blue"}, "font": {"color": "black", "face": "arial", "size": 18, "strokeColor": "#ffffff", "strokeWidth": 2}, "id": "Create Load Event Handlers", "label": "Create Load Event Handlers", "shape": "dot", "size": 20}, {"borderWidth": 2, "color": {"background": "lightblue", "border": "blue"}, "font": {"color": "black", "face": "arial", "size": 18, "strokeColor": "#ffffff", "strokeWidth": 2}, "id": "Configure Router On A Stick", "label": "Configure Router On A Stick", "shape": "dot", "size": 20}, {"borderWidth": 2, "color": {"background": "lightblue", "border": "blue"}, "font": {"color": "black", "face": "arial", "size": 18, "strokeColor": "#ffffff", "strokeWidth": 2}, "id": "Configure VLANs", "label": "Configure VLANs", "shape": "dot", "size": 20}, {"borderWidth": 2, "color": {"background": "lightblue", "border": "blue"}, "font": {"color": "black", "face": "arial", "size": 18, "strokeColor": "#ffffff", "strokeWidth": 2}, "id": "Validate Network Configuration", "label": "Validate Network Configuration", "shape": "dot", "size": 20}, {"borderWidth": 2, "color": {"background": "lightblue", "border": "blue"}, "font": {"color": "black", "face": "arial", "size": 18, "strokeColor": "#ffffff", "strokeWidth": 2}, "id": "Prepare TPS Data", "label": "Prepare TPS Data", "shape": "dot", "size": 20}, {"borderWidth": 2, "color": {"background": "lightblue", "border": "blue"}, "font": {"color": "black", "face": "arial", "size": 18, "strokeColor": "#ffffff", "strokeWidth": 2}, "id": "Generate Bar Chart", "label": "Generate Bar Chart", "shape": "dot", "size": 20}, {"borderWidth": 2, "color": {"background": "lightblue", "border": "blue"}, "font": {"color": "black", "face": "arial", "size": 18, "strokeColor": "#ffffff", "strokeWidth": 2}, "id": "Display Chart", "label": "Display Chart", "shape": "dot", "size": 20}, {"borderWidth": 2, "color": {"background": "lightblue", "border": "blue"}, "font": {"color": "black", "face": "arial", "size": 18, "strokeColor": "#ffffff", "strokeWidth": 2}, "id": "Configure Dual Encryption", "label": "Configure Dual Encryption", "shape": "dot", "size": 20}, {"borderWidth": 2, "color": {"background": "lightblue", "border": "blue"}, "font": {"color": "black", "face": "arial", "size": 18, "strokeColor": "#ffffff", "strokeWidth": 2}, "id": "Setup Smart Contract Access Control", "label": "Setup Smart Contract Access Control", "shape": "dot", "size": 20}, {"borderWidth": 2, "color": {"background": "lightblue", "border": "blue"}, "font": {"color": "black", "face": "arial", "size": 18, "strokeColor": "#ffffff", "strokeWidth": 2}, "id": "Optimize For AR Devices", "label": "Optimize For AR Devices", "shape": "dot", "size": 20}, {"borderWidth": 2, "color": {"background": "lightblue", "border": "blue"}, "font": {"color": "black", "face": "arial", "size": 18, "strokeColor": "#ffffff", "strokeWidth": 2}, "id": "Initialise Network Manager Class", "label": "Initialise Network Manager Class", "shape": "dot", "size": 20}, {"borderWidth": 2, "color": {"background": "lightblue", "border": "blue"}, "font": {"color": "black", "face": "arial", "size": 18, "strokeColor": "#ffffff", "strokeWidth": 2}, "id": "Configure Client Server Model", "label": "Configure Client Server Model", "shape": "dot", "size": 20}, {"borderWidth": 2, "color": {"background": "lightblue", "border": "blue"}, "font": {"color": "black", "face": "arial", "size": 18, "strokeColor": "#ffffff", "strokeWidth": 2}, "id": "Setup Synchronization Callbacks", "label": "Setup Synchronization Callbacks", "shape": "dot", "size": 20}, {"borderWidth": 2, "color": {"background": "lightblue", "border": "blue"}, "font": {"color": "black", "face": "arial", "size": 18, "strokeColor": "#ffffff", "strokeWidth": 2}, "id": "Run System Checks", "label": "Run System Checks", "shape": "dot", "size": 20}, {"borderWidth": 2, "color": {"background": "lightblue", "border": "blue"}, "font": {"color": "black", "face": "arial", "size": 18, "strokeColor": "#ffffff", "strokeWidth": 2}, "id": "Perform Security Validations", "label": "Perform Security Validations", "shape": "dot", "size": 20}, {"borderWidth": 2, "color": {"background": "lightblue", "border": "blue"}, "font": {"color": "black", "face": "arial", "size": 18, "strokeColor": "#ffffff", "strokeWidth": 2}, "id": "Ensure Data Integrity", "label": "Ensure Data Integrity", "shape": "dot", "size": 20}]);
+                  edges = new vis.DataSet([{"arrows": {"to": {"enabled": true, "scaleFactor": 1.5}}, "color": {"color": "gray", "highlight": "blue", "hover": "red"}, "from": "Main Integration Function", "to": "Initialise Network Application", "width": 1}, {"arrows": {"to": {"enabled": true, "scaleFactor": 1.5}}, "color": {"color": "gray", "highlight": "blue", "hover": "red"}, "from": "Main Integration Function", "to": "Setup Main Screen", "width": 1}, {"arrows": {"to": {"enabled": true, "scaleFactor": 1.5}}, "color": {"color": "gray", "highlight": "blue", "hover": "red"}, "from": "Main Integration Function", "to": "Configure MDI", "width": 1}, {"arrows": {"to": {"enabled": true, "scaleFactor": 1.5}}, "color": {"color": "gray", "highlight": "blue", "hover": "red"}, "from": "Main Integration Function", "to": "Setup Network Infrastructure", "width": 1}, {"arrows": {"to": {"enabled": true, "scaleFactor": 1.5}}, "color": {"color": "gray", "highlight": "blue", "hover": "red"}, "from": "Main Integration Function", "to": "Visualize Blockchain TPS", "width": 1}, {"arrows": {"to": {"enabled": true, "scaleFactor": 1.5}}, "color": {"color": "gray", "highlight": "blue", "hover": "red"}, "from": "Main Integration Function", "to": "Initialise SARBP", "width": 1}, {"arrows": {"to": {"enabled": true, "scaleFactor": 1.5}}, "color": {"color": "gray", "highlight": "blue", "hover": "red"}, "from": "Main Integration Function", "to": "Setup Network Manager", "width": 1}, {"arrows": {"to": {"enabled": true, "scaleFactor": 1.5}}, "color": {"color": "gray", "highlight": "blue", "hover": "red"}, "from": "Main Integration Function", "to": "Finalise Integration and Validate", "width": 1}, {"arrows": {"to": {"enabled": true, "scaleFactor": 1.5}}, "color": {"color": "gray", "highlight": "blue", "hover": "red"}, "from": "Initialise Network Application", "to": "Initialise Socket", "width": 1}, {"arrows": {"to": {"enabled": true, "scaleFactor": 1.5}}, "color": {"color": "gray", "highlight": "blue", "hover": "red"}, "from": "Initialise Network Application", "to": "Configure Socket Parameters", "width": 1}, {"arrows": {"to": {"enabled": true, "scaleFactor": 1.5}}, "color": {"color": "gray", "highlight": "blue", "hover": "red"}, "from": "Initialise Network Application", "to": "Setup Socket Connections", "width": 1}, {"arrows": {"to": {"enabled": true, "scaleFactor": 1.5}}, "color": {"color": "gray", "highlight": "blue", "hover": "red"}, "from": "Setup Main Screen", "to": "Configure Panels", "width": 1}, {"arrows": {"to": {"enabled": true, "scaleFactor": 1.5}}, "color": {"color": "gray", "highlight": "blue", "hover": "red"}, "from": "Setup Main Screen", "to": "Add CRUD Buttons", "width": 1}, {"arrows": {"to": {"enabled": true, "scaleFactor": 1.5}}, "color": {"color": "gray", "highlight": "blue", "hover": "red"}, "from": "Setup Main Screen", "to": "Set Entry Point", "width": 1}, {"arrows": {"to": {"enabled": true, "scaleFactor": 1.5}}, "color": {"color": "gray", "highlight": "blue", "hover": "red"}, "from": "Configure MDI", "to": "Initialise MDI Form", "width": 1}, {"arrows": {"to": {"enabled": true, "scaleFactor": 1.5}}, "color": {"color": "gray", "highlight": "blue", "hover": "red"}, "from": "Configure MDI", "to": "Configure Menu Strip", "width": 1}, {"arrows": {"to": {"enabled": true, "scaleFactor": 1.5}}, "color": {"color": "gray", "highlight": "blue", "hover": "red"}, "from": "Configure MDI", "to": "Create Load Event Handlers", "width": 1}, {"arrows": {"to": {"enabled": true, "scaleFactor": 1.5}}, "color": {"color": "gray", "highlight": "blue", "hover": "red"}, "from": "Setup Network Infrastructure", "to": "Configure Router On A Stick", "width": 1}, {"arrows": {"to": {"enabled": true, "scaleFactor": 1.5}}, "color": {"color": "gray", "highlight": "blue", "hover": "red"}, "from": "Setup Network Infrastructure", "to": "Configure VLANs", "width": 1}, {"arrows": {"to": {"enabled": true, "scaleFactor": 1.5}}, "color": {"color": "gray", "highlight": "blue", "hover": "red"}, "from": "Setup Network Infrastructure", "to": "Validate Network Configuration", "width": 1}, {"arrows": {"to": {"enabled": true, "scaleFactor": 1.5}}, "color": {"color": "gray", "highlight": "blue", "hover": "red"}, "from": "Visualize Blockchain TPS", "to": "Prepare TPS Data", "width": 1}, {"arrows": {"to": {"enabled": true, "scaleFactor": 1.5}}, "color": {"color": "gray", "highlight": "blue", "hover": "red"}, "from": "Visualize Blockchain TPS", "to": "Generate Bar Chart", "width": 1}, {"arrows": {"to": {"enabled": true, "scaleFactor": 1.5}}, "color": {"color": "gray", "highlight": "blue", "hover": "red"}, "from": "Visualize Blockchain TPS", "to": "Display Chart", "width": 1}, {"arrows": {"to": {"enabled": true, "scaleFactor": 1.5}}, "color": {"color": "gray", "highlight": "blue", "hover": "red"}, "from": "Initialise SARBP", "to": "Configure Dual Encryption", "width": 1}, {"arrows": {"to": {"enabled": true, "scaleFactor": 1.5}}, "color": {"color": "gray", "highlight": "blue", "hover": "red"}, "from": "Initialise SARBP", "to": "Setup Smart Contract Access Control", "width": 1}, {"arrows": {"to": {"enabled": true, "scaleFactor": 1.5}}, "color": {"color": "gray", "highlight": "blue", "hover": "red"}, "from": "Initialise SARBP", "to": "Optimize For AR Devices", "width": 1}, {"arrows": {"to": {"enabled": true, "scaleFactor": 1.5}}, "color": {"color": "gray", "highlight": "blue", "hover": "red"}, "from": "Setup Network Manager", "to": "Initialise Network Manager Class", "width": 1}, {"arrows": {"to": {"enabled": true, "scaleFactor": 1.5}}, "color": {"color": "gray", "highlight": "blue", "hover": "red"}, "from": "Setup Network Manager", "to": "Configure Client Server Model", "width": 1}, {"arrows": {"to": {"enabled": true, "scaleFactor": 1.5}}, "color": {"color": "gray", "highlight": "blue", "hover": "red"}, "from": "Setup Network Manager", "to": "Setup Synchronization Callbacks", "width": 1}, {"arrows": {"to": {"enabled": true, "scaleFactor": 1.5}}, "color": {"color": "gray", "highlight": "blue", "hover": "red"}, "from": "Finalise Integration and Validate", "to": "Run System Checks", "width": 1}, {"arrows": {"to": {"enabled": true, "scaleFactor": 1.5}}, "color": {"color": "gray", "highlight": "blue", "hover": "red"}, "from": "Finalise Integration and Validate", "to": "Perform Security Validations", "width": 1}, {"arrows": {"to": {"enabled": true, "scaleFactor": 1.5}}, "color": {"color": "gray", "highlight": "blue", "hover": "red"}, "from": "Finalise Integration and Validate", "to": "Ensure Data Integrity", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"nodes": {"shape": "dot", "size": 20, "color": {"border": "blue", "background": "lightblue"}, "font": {"color": "black", "size": 18, "face": "arial", "strokeWidth": 2, "strokeColor": "#ffffff"}, "borderWidth": 2}, "edges": {"color": {"color": "gray", "highlight": "blue", "hover": "red"}, "arrows": {"to": {"enabled": true, "scaleFactor": 1.5}}}, "interaction": {"hover": true, "navigationButtons": true, "zoomView": true}, "physics": {"forceAtlas2Based": {"gravitationalConstant": -50, "centralGravity": 0.01, "springLength": 200, "springConstant": 0.08}, "maxVelocity": 50, "solver": "forceAtlas2Based", "timestep": 0.35, "stabilization": {"enabled": true, "iterations": 200}}};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
